@@ -11,13 +11,13 @@ body {
 .hero {
     background: linear-gradient(135deg, #6D5BBA, #8D58BF, #D46AC0);
     color: white;
-    height: 60vh;
+    height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 20px;
+    padding: 40px 20px;
     border-bottom-left-radius: 50px;
     border-bottom-right-radius: 50px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -29,12 +29,42 @@ body {
     font-weight: 700;
 }
 
-.hero p {
+.slogan {
     font-size: 1.5rem;
     opacity: 0.9;
     font-weight: 300;
+    margin-bottom: 20px;
 }
 
+/* Vision & Mission Section */
+.vision-mission {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 6px 15px rgba(255, 255, 255, 0.1);
+    max-width: 800px;
+    width: 90%;
+    margin-top: 20px;
+}
+
+.vision-mission h2 {
+    color: #FFD700;
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.vision-mission p {
+    font-size: 1.1rem;
+    color: #fff;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+/* Section Cards */
 .section {
     padding: 50px 20px;
     text-align: center;
