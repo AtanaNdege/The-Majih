@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Access • The Majih</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="bg-emerald-50 min-h-screen flex items-center justify-center p-4">
+
+    <div class="max-w-md w-full bg-white rounded-[2.5rem] shadow-2xl overflow-hidden border border-emerald-100">
+        <div class="bg-emerald-600 p-8 text-center text-white">
+            <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center text-3xl font-bold mx-auto mb-4 backdrop-blur-sm">M</div>
+            <h1 class="text-2xl font-bold">Secure Verification</h1>
+            <p class="text-emerald-100 text-sm mt-2">Your identity remains hidden. Your safety remains absolute.</p>
+        </div>
+
+        <form id="loginForm" class="p-8 space-y-5">
+            <div>
+                <label class="block text-xs font-bold text-emerald-700 uppercase tracking-wider mb-2">Contact Details</label>
+                <input type="email" id="userEmail" placeholder="Email Address" required
+                    class="w-full p-4 bg-emerald-50 border-none rounded-2xl focus:ring-2 focus:ring-emerald-500 outline-none mb-3">
+                <input type="tel" id="userPhone" placeholder="Phone Number (e.g. 07...)" required
+                    class="w-full p-4 bg-emerald-50 border-none rounded-2xl focus:ring-2 focus:ring-emerald-500 outline-none">
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-emerald-700 uppercase tracking-wider mb-2">National ID Upload</label>
+                <div class="relative group">
+                    <input type="file" id="idUpload" accept="image/*" class="hidden" onchange="updateFileName(this)">
+                    <label for="idUpload" class="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-emerald-200 rounded-2xl cursor-pointer bg-emerald-50/50 group-hover:bg-emerald-50 transition-all">
+                        <i class="fas fa-id-card text-2xl text-emerald-400 mb-2"></i>
+                        <span id="fileName" class="text-sm text-emerald-600">Click to upload front of ID</span>
+                    </label>
+                </div>
+                <p class="text-[10px] text-emerald-500 mt-2 italic text-center">
+                    <i class="fas fa-shield-alt"></i> Maji OCR will extract your name and age. We do not store the image itself.
+                </p>
+            </div>
+
+            <button type="submit" id="submitBtn" class="w-full py-4 bg-emerald-600 text-white rounded-2xl font-bold shadow-lg hover:bg-emerald-700 transition-all active:scale-95 flex items-center justify-center gap-3">
+                <span>Verify & Enter Space</span>
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </form>
+    </div>
+
+    <script>
+        function updateFileName(input) {
+            const name = input.files[0]?.name || "Click to upload front of ID";
+            document.getElementById('fileName').textContent = name;
+        }
+
+        document.getElementById('loginForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            
+            // Visual feedback
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fas fa-circle-notch animate-spin"></i> Reading ID...`;
+
+            // This is where we would call the OCR API and Backend
+            // For now, let's simulate the process
+            setTimeout(() => {
+                alert("Identity Verified via OCR. IP Address logged for safety. Welcome to The Majih.");
+                window.location.href = 'home.html'; // Redirect to your main app
+            }, 2500);
+        };
+    </script>
+</body>
+</html>
