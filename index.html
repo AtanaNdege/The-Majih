@@ -26,6 +26,10 @@
             transform: translateY(-4px);
             box-shadow: 0 20px 25px -5px rgb(16 185 129 / 0.1), 0 8px 10px -6px rgb(16 185 129 / 0.1);
         }
+        .need-btn.selected {
+            border-color: #059669 !important;
+            background-color: #ecfdf5 !important;
+        }
     </style>
 </head>
 <body class="bg-emerald-50 text-emerald-900 min-h-screen">
@@ -139,18 +143,27 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm text-emerald-600 mb-2">What do you need right now?</label>
-                    <div class="grid grid-cols-2 gap-3">
-                        <button onclick="selectNeed(this)" data-need="Just listen" class="need-btn p-4 border-2 border-transparent rounded-2xl text-left hover:border-emerald-200 transition-all">🙉 Just listen</button>
-                        <button onclick="selectNeed(this)" data-need="Gentle advice" class="need-btn p-4 border-2 border-transparent rounded-2xl text-left hover:border-emerald-200 transition-all">💡 Gentle advice</button>
-                        <button onclick="selectNeed(this)" data-need="Encouragement" class="need-btn p-4 border-2 border-transparent rounded-2xl text-left hover:border-emerald-200 transition-all">❤️ Encouragement</button>
-                        <button onclick="selectNeed(this)" data-need="Resources only" class="need-btn p-4 border-2 border-transparent rounded-2xl text-left hover:border-emerald-200 transition-all">📚 Resources only</button>
+                    <div class="flex justify-between items-center mb-2">
+                        <label id="needLabel" class="block text-sm text-emerald-600 font-semibold">What do you need right now?</label>
+                        <span id="needError" class="text-[10px] text-red-500 font-bold hidden uppercase tracking-widest">Please select one</span>
+                    </div>
+                    <div id="needGrid" class="grid grid-cols-2 gap-3">
+                        <button type="button" onclick="selectNeed(this)" data-need="Just listen" class="need-btn p-4 border-2 border-transparent rounded-2xl text-left hover:border-emerald-200 transition-all bg-emerald-50/50">🙉 Just listen</button>
+                        <button type="button" onclick="selectNeed(this)" data-need="Gentle advice" class="need-btn p-4 border-2 border-transparent rounded-2xl text-left hover:border-emerald-200 transition-all bg-emerald-50/50">💡 Gentle advice</button>
+                        <button type="button" onclick="selectNeed(this)" data-need="Encouragement" class="need-btn p-4 border-2 border-transparent rounded-2xl text-left hover:border-emerald-200 transition-all bg-emerald-50/50">❤️ Encouragement</button>
+                        <button type="button" onclick="selectNeed(this)" data-need="Resources only" class="need-btn p-4 border-2 border-transparent rounded-2xl text-left hover:border-emerald-200 transition-all bg-emerald-50/50">📚 Resources only</button>
                     </div>
                 </div>
 
-                <textarea id="storyText" rows="5" 
-                          class="w-full p-5 border border-emerald-200 rounded-3xl focus:outline-none focus:border-emerald-500 resize-none"
-                          placeholder="Write your story here... Be as open as you want. You are safe."></textarea>
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="block text-sm text-emerald-600 font-semibold">Your Story</label>
+                        <span id="textError" class="text-[10px] text-red-500 font-bold hidden uppercase tracking-widest">Tell us a bit more</span>
+                    </div>
+                    <textarea id="storyText" rows="5" 
+                              class="w-full p-5 border border-emerald-200 rounded-3xl focus:outline-none focus:border-emerald-500 resize-none"
+                              placeholder="Write your story here... Be as open as you want."></textarea>
+                </div>
             </div>
 
             <div class="p-6 border-t flex gap-4 bg-gray-50">
@@ -172,31 +185,14 @@
                 </div>
                 
                 <div class="space-y-8 text-emerald-700">
-                    <div class="flex gap-6">
-                        <div class="w-8 h-8 rounded-2xl bg-emerald-100 flex items-center justify-center flex-shrink-0 text-xl">1</div>
-                        <div><strong class="text-emerald-800">Law of Sacred Safety</strong><br>No one is ever attacked, shamed, mocked, blamed, or humiliated here.</div>
-                    </div>
-                    <div class="flex gap-6">
-                        <div class="w-8 h-8 rounded-2xl bg-emerald-100 flex items-center justify-center flex-shrink-0 text-xl">2</div>
-                        <div><strong class="text-emerald-800">Law of Listening First</strong><br>Before giving advice — acknowledge the pain. Presence matters more than solutions.</div>
-                    </div>
-                    <div class="flex gap-6">
-                        <div class="w-8 h-8 rounded-2xl bg-emerald-100 flex items-center justify-center flex-shrink-0 text-xl">3</div>
-                        <div><strong class="text-emerald-800">Law of Honest Anonymity</strong><br>Everyone starts masked. Identity is your choice, never forced.</div>
-                    </div>
-                    <div class="flex gap-6">
-                        <div class="w-8 h-8 rounded-2xl bg-emerald-100 flex items-center justify-center flex-shrink-0 text-xl">4</div>
-                        <div><strong class="text-emerald-800">Law of Progress</strong><br>Stories are not meant to stay stuck. Gentle forward movement is encouraged.</div>
-                    </div>
-                    <div class="flex gap-6">
-                        <div class="w-8 h-8 rounded-2xl bg-emerald-100 flex items-center justify-center flex-shrink-0 text-xl">5</div>
-                        <div><strong class="text-emerald-800">Law of Purpose</strong><br>Those who heal are invited to quietly support others.</div>
-                    </div>
+                    <div><strong class="text-emerald-800">1. Law of Sacred Safety</strong><br>No one is ever attacked, shamed, mocked, blamed, or humiliated here.</div>
+                    <div><strong class="text-emerald-800">2. Law of Listening First</strong><br>Before giving advice — acknowledge the pain. Presence matters more than solutions.</div>
+                    <div><strong class="text-emerald-800">3. Law of Honest Anonymity</strong><br>Everyone starts masked. Identity is your choice, never forced.</div>
+                    <div><strong class="text-emerald-800">4. Law of Progress</strong><br>Stories are not meant to stay stuck. Gentle forward movement is encouraged.</div>
+                    <div><strong class="text-emerald-800">5. Law of Purpose</strong><br>Those who heal are invited to quietly support others.</div>
                 </div>
 
                 <div class="mt-12 text-xs text-emerald-500 border-t pt-6">
-                    <strong>Important Disclaimers</strong><br>
-                    The Majih is peer support only — not therapy, not medical, not legal advice.<br>
                     Crisis? Call Befrienders Kenya: 0722 178 177 or Red Cross: 1199 immediately.
                 </div>
             </div>
@@ -212,7 +208,6 @@
                 </div>
                 <p class="text-emerald-400 text-sm">Kenya-first structured peer support.<br>You are never alone here.</p>
             </div>
-            
             <div>
                 <div class="text-sm font-medium mb-4 text-emerald-400">IN CRISIS?</div>
                 <div class="space-y-2 text-sm text-emerald-200">
@@ -220,10 +215,7 @@
                     <p>Kenya Red Cross — 1199</p>
                 </div>
             </div>
-            
-            <div class="text-xs text-emerald-500 self-end">
-                © 2026 The Majih • All pain is sacred here.
-            </div>
+            <div class="text-xs text-emerald-500 self-end">© 2026 The Majih • All pain is sacred here.</div>
         </div>
     </footer>
 
@@ -259,27 +251,17 @@
                         <div class="flex justify-between items-start mb-6">
                             <div class="flex items-center gap-3">
                                 <div class="w-9 h-9 bg-emerald-100 rounded-2xl flex items-center justify-center text-emerald-700 text-lg">👤</div>
-                                <div>
-                                    <p class="font-medium text-emerald-900">${post.username}</p>
-                                    <p class="text-xs text-emerald-500">${post.time} • ${post.space}</p>
-                                </div>
+                                <div><p class="font-medium text-emerald-900">${post.username}</p><p class="text-xs text-emerald-500">${post.time} • ${post.space}</p></div>
                             </div>
-                            <div onclick="cycleStatus(${post.id})" class="cursor-pointer text-xs font-medium px-4 py-2 bg-emerald-50 text-emerald-700 rounded-2xl hover:bg-emerald-100 transition-all">
-                                ${post.status}
-                            </div>
+                            <div onclick="cycleStatus(${post.id})" class="cursor-pointer text-xs font-medium px-4 py-2 bg-emerald-50 text-emerald-700 rounded-2xl hover:bg-emerald-100 transition-all">${post.status}</div>
                         </div>
                         <div class="mb-6 text-emerald-800 leading-relaxed">${post.text}</div>
-                        <div class="text-xs text-emerald-500 mb-6">I need: <span class="font-medium text-emerald-600">${post.need}</span></div>
-                        
+                        <div class="text-xs text-emerald-500 mb-6 font-medium uppercase tracking-wider">I need: <span class="text-emerald-600">${post.need}</span></div>
                         <div class="border-t border-emerald-50 pt-6">
                             <div id="comments-${post.id}" class="space-y-2 mb-4">${commentHtml}</div>
                             <div class="flex gap-3">
-                                <input id="input-${post.id}" type="text" placeholder="Write a supportive comment..." 
-                                       class="flex-1 text-sm p-4 bg-emerald-50 border-none rounded-2xl focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-                                <button onclick="addComment(${post.id})" 
-                                        class="bg-emerald-600 text-white px-6 py-2 rounded-2xl text-sm font-semibold hover:bg-emerald-700 transition-colors">
-                                    Send
-                                </button>
+                                <input id="input-${post.id}" type="text" placeholder="Offer some kind words..." class="flex-1 text-sm p-4 bg-emerald-50 border-none rounded-2xl focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                                <button onclick="addComment(${post.id})" class="bg-emerald-600 text-white px-6 py-2 rounded-2xl text-sm font-semibold hover:bg-emerald-700 transition-colors">Send</button>
                             </div>
                         </div>
                     </div>
@@ -291,35 +273,43 @@
             const input = document.getElementById(`input-${postId}`);
             const text = input.value.trim();
             if (!text) return;
-
             const post = posts.find(p => p.id === postId);
-            post.comments.push({
-                user: "MajihSoul_" + Math.floor(1000 + Math.random() * 9000),
-                text: text
-            });
-
-            if (post.statusIndex === 0) {
-                post.statusIndex = 1;
-                post.status = statusOptions[1];
-            }
-
+            post.comments.push({ user: "MajihSoul_" + Math.floor(1000 + Math.random() * 9000), text: text });
+            if (post.statusIndex === 0) { post.statusIndex = 1; post.status = statusOptions[1]; }
             input.value = '';
             renderFeed();
         }
 
         function submitPost() {
             const text = document.getElementById('storyText').value.trim();
-            if (!text) return alert("Please share a bit of your story.");
+            const selectedBtn = document.querySelector('.need-btn.selected');
+            const textError = document.getElementById('textError');
+            const needError = document.getElementById('needError');
+            
+            let hasError = false;
 
-            const space = document.getElementById('spaceSelect').value;
-            const activeBtn = document.querySelector('.need-btn.border-emerald-500');
-            const need = activeBtn ? activeBtn.getAttribute('data-need') : "Just listen";
+            // Simple internal validation instead of alerts
+            if (!text) {
+                textError.classList.remove('hidden');
+                hasError = true;
+            } else {
+                textError.classList.add('hidden');
+            }
+
+            if (!selectedBtn) {
+                needError.classList.remove('hidden');
+                hasError = true;
+            } else {
+                needError.classList.add('hidden');
+            }
+
+            if (hasError) return;
 
             posts.unshift({
                 id: Date.now(),
                 username: "MajihSoul_" + Math.floor(1000 + Math.random() * 9000),
-                space: space,
-                need: need,
+                space: document.getElementById('spaceSelect').value,
+                need: selectedBtn.getAttribute('data-need'),
                 text: text,
                 status: "Just Shared",
                 statusIndex: 0,
@@ -328,49 +318,38 @@
             });
 
             renderFeed();
-            document.getElementById('storyText').value = '';
-            document.querySelectorAll('.need-btn').forEach(b => b.classList.remove('border-emerald-500', 'bg-emerald-50'));
             closeNewPostModal();
         }
 
-        function cycleStatus(id) {
-            const post = posts.find(p => p.id === id);
-            post.statusIndex = (post.statusIndex + 1) % statusOptions.length;
-            post.status = statusOptions[post.statusIndex];
-            renderFeed();
-        }
-
         function selectNeed(btn) {
-            document.querySelectorAll('.need-btn').forEach(b => b.classList.remove('border-emerald-500', 'bg-emerald-50'));
-            btn.classList.add('border-emerald-500', 'bg-emerald-50');
+            document.querySelectorAll('.need-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            document.getElementById('needError').classList.add('hidden');
         }
 
         function showSection(id) {
             const target = document.getElementById(id);
-            if (target) {
-                const navHeight = 80; 
-                window.scrollTo({
-                    top: target.offsetTop - navHeight,
-                    behavior: 'smooth'
-                });
-            }
+            if (target) window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
         }
 
-        function enterSpace(spaceName) {
-            const feedContainer = document.getElementById('feed-container');
-            if(feedContainer) {
-                window.scrollTo({
-                    top: feedContainer.offsetTop - 80,
-                    behavior: 'smooth'
-                });
-            }
+        function enterSpace() {
+            const target = document.getElementById('feed-container');
+            if (target) window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
         }
 
-        function openNewPostModal() { document.getElementById('newPostModal').classList.remove('hidden'); }
-        function closeNewPostModal() { document.getElementById('newPostModal').classList.add('hidden'); }
+        function openNewPostModal() { 
+            document.getElementById('newPostModal').classList.remove('hidden'); 
+            document.getElementById('textError').classList.add('hidden');
+            document.getElementById('needError').classList.add('hidden');
+        }
+        function closeNewPostModal() { 
+            document.getElementById('newPostModal').classList.add('hidden'); 
+            document.getElementById('storyText').value = '';
+            document.querySelectorAll('.need-btn').forEach(b => b.classList.remove('selected'));
+        }
         function showConstitution() { document.getElementById('constitutionModal').classList.remove('hidden'); }
         function closeConstitutionModal() { document.getElementById('constitutionModal').classList.add('hidden'); }
-        function toggleAnonymousMode() { alert("Identity protection is active."); }
+        function toggleAnonymousMode() { console.log("Anonymity active."); }
 
         window.onload = renderFeed;
     </script>
