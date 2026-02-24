@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Majih • Hear. Help. Heal.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
+        
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            scroll-behavior: smooth;
+        }
+        .logo-font {
+            font-family: 'Playfair Display', serif;
+        }
+        .hero-bg {
+            background: linear-gradient(135deg, #10b981 0%, #15803d 100%);
+        }
+        .post-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .post-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgb(16 185 129 / 0.1), 0 8px 10px -6px rgb(16 185 129 / 0.1);
+        }
+    </style>
+</head>
+<body class="bg-emerald-50 text-emerald-900 min-h-screen">
+
+    <nav class="bg-white border-b border-emerald-100 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-emerald-600 rounded-2xl flex items-center justify-center text-white text-2xl font-bold logo-font shadow-inner">M</div>
+                <div>
+                    <span class="text-3xl font-bold tracking-tight text-emerald-700 logo-font">The Majih</span>
+                    <p class="text-[10px] text-emerald-500 -mt-1 tracking-widest">…Hear. Help. Heal…</p>
+                </div>
+            </div>
+            
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium">
+                <a href="javascript:void(0)" onclick="showSection('home')" class="hover:text-emerald-700 transition-colors">Home</a>
+                <a href="javascript:void(0)" onclick="showSection('spaces')" class="hover:text-emerald-700 transition-colors">Spaces</a>
+                <a href="javascript:void(0)" onclick="showConstitution()" class="hover:text-emerald-700 transition-colors">Our Constitution</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <button onclick="openNewPostModal()" 
+                        class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-2xl font-semibold flex items-center gap-2 transition-all active:scale-95">
+                    <i class="fas fa-plus"></i>
+                    <span class="hidden sm:inline">Share My Story</span>
+                </button>
+                <button onclick="toggleAnonymousMode()" 
+                        class="w-10 h-10 rounded-2xl bg-emerald-100 hover:bg-emerald-200 flex items-center justify-center text-emerald-700 transition-colors">
+                    <i class="fas fa-user-secret"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="hero-bg text-white py-24">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <div class="max-w-2xl mx-auto">
+                <h1 class="text-6xl md:text-7xl font-bold logo-font leading-tight tracking-tighter mb-6">
+                    You will not suffer alone.
+                </h1>
+                <p class="text-xl md:text-2xl text-emerald-100 mb-10">
+                    A safe, structured space where pain is heard, support is given, and healing begins.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button onclick="openNewPostModal()" 
+                            class="bg-white text-emerald-700 hover:bg-emerald-50 px-10 py-5 rounded-3xl text-xl font-semibold shadow-xl transition-all active:scale-95">
+                        Share Your Story Anonymously
+                    </button>
+                    <button onclick="showSection('spaces')" 
+                            class="border border-white hover:bg-white/10 px-10 py-5 rounded-3xl text-xl font-medium transition-all">
+                        Browse Support Spaces
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="spaces" class="py-16 bg-white">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-semibold mb-3">Our Pilot Spaces</h2>
+                <p class="text-emerald-600">Choose the path that feels closest to your heart right now</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div onclick="enterSpace('Grief & Loss')" class="bg-emerald-50 hover:bg-emerald-100 border border-emerald-100 rounded-3xl p-8 cursor-pointer transition-all group">
+                    <div class="w-16 h-16 bg-emerald-100 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform">🌿</div>
+                    <h3 class="text-2xl font-semibold mb-2">Grief & Loss</h3>
+                    <p class="text-emerald-600">When someone leaves or something breaks inside.</p>
+                </div>
+                
+                <div onclick="enterSpace('Relationship Struggles')" class="bg-emerald-50 hover:bg-emerald-100 border border-emerald-100 rounded-3xl p-8 cursor-pointer transition-all group">
+                    <div class="w-16 h-16 bg-emerald-100 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform">💔</div>
+                    <h3 class="text-2xl font-semibold mb-2">Relationship Struggles</h3>
+                    <p class="text-emerald-600">Family, love, betrayal, loneliness.</p>
+                </div>
+                
+                <div onclick="enterSpace('Academic & Work Pressure')" class="bg-emerald-50 hover:bg-emerald-100 border border-emerald-100 rounded-3xl p-8 cursor-pointer transition-all group">
+                    <div class="w-16 h-16 bg-emerald-100 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform">📚</div>
+                    <h3 class="text-2xl font-semibold mb-2">Academic & Work Pressure</h3>
+                    <p class="text-emerald-600">Exams, hustle, burnout, expectations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="feed-container" class="py-12 bg-emerald-50">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-3xl font-semibold">Recent Journeys</h2>
+            </div>
+            <div id="feed" class="space-y-8"></div>
+        </div>
+    </section>
+
+    <div id="newPostModal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[100]">
+        <div class="bg-white rounded-3xl max-w-lg w-full mx-4 max-h-[90vh] overflow-hidden flex flex-col">
+            <div class="p-6 border-b flex items-center justify-between">
+                <h3 class="text-2xl font-semibold">Share Your Story</h3>
+                <button onclick="closeNewPostModal()" class="text-3xl leading-none text-emerald-400 hover:text-emerald-600">×</button>
+            </div>
+            
+            <div class="p-6 space-y-6 overflow-y-auto">
+                <div>
+                    <label class="block text-sm text-emerald-600 mb-2">Which space feels right?</label>
+                    <select id="spaceSelect" class="w-full p-4 border border-emerald-200 rounded-2xl focus:outline-none focus:border-emerald-500">
+                        <option value="Grief & Loss">Grief & Loss</option>
+                        <option value="Relationship Struggles">Relationship Struggles</option>
+                        <option value="Academic & Work Pressure">Academic & Work Pressure</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm text-emerald-600 mb-2">What do you need right now?</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button onclick="selectNeed(this)" data-need="Just listen" class="need-btn p-4 border-2 border-transparent rounded-2xl text-left hover:border-emerald-200 transition-all">🙉 Just listen</button>
+                        <button onclick="selectNeed(this)" data-need="Gentle advice" class="need-btn p-4 border-2 border-transparent rounded-2xl text-left hover:border-emerald-200 transition-all">💡 Gentle advice</button>
+                        <button onclick="selectNeed(this)" data-need="Encouragement" class="need-btn p-4 border-2 border-transparent rounded-2xl text-left hover:border-emerald-200 transition-all">❤️ Encouragement</button>
+                        <button onclick="selectNeed(this)" data-need="Resources only" class="need-btn p-4 border-2 border-transparent rounded-2xl text-left hover:border-emerald-200 transition-all">📚 Resources only</button>
+                    </div>
+                </div>
+
+                <textarea id="storyText" rows="5" 
+                          class="w-full p-5 border border-emerald-200 rounded-3xl focus:outline-none focus:border-emerald-500 resize-none"
+                          placeholder="Write your story here... Be as open as you want. You are safe."></textarea>
+            </div>
+
+            <div class="p-6 border-t flex gap-4 bg-gray-50">
+                <button onclick="closeNewPostModal()" class="flex-1 py-4 rounded-2xl border border-emerald-200 font-medium text-emerald-700 hover:bg-emerald-100">Cancel</button>
+                <button onclick="submitPost()" class="flex-1 py-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl font-semibold shadow-lg transition-all active:scale-95">Post Anonymously</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="constitutionModal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[100]">
+        <div class="bg-white rounded-3xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-auto">
+            <div class="p-8">
+                <div class="flex justify-between items-start mb-8">
+                    <div>
+                        <span class="text-emerald-600 text-sm font-medium">THE MAJIH CONSTITUTION v1.0</span>
+                        <h2 class="text-4xl font-bold text-emerald-800">5 Founding Laws</h2>
+                    </div>
+                    <button onclick="closeConstitutionModal()" class="text-4xl leading-none text-emerald-300 hover:text-emerald-600">×</button>
+                </div>
+                
+                <div class="space-y-8 text-emerald-700">
+                    <div class="flex gap-6">
+                        <div class="w-8 h-8 rounded-2xl bg-emerald-100 flex items-center justify-center flex-shrink-0 text-xl">1</div>
+                        <div><strong class="text-emerald-800">Law of Sacred Safety</strong><br>No one is ever attacked, shamed, mocked, blamed, or humiliated here.</div>
+                    </div>
+                    <div class="flex gap-6">
+                        <div class="w-8 h-8 rounded-2xl bg-emerald-100 flex items-center justify-center flex-shrink-0 text-xl">2</div>
+                        <div><strong class="text-emerald-800">Law of Listening First</strong><br>Before giving advice — acknowledge the pain. Presence matters more than solutions.</div>
+                    </div>
+                    <div class="flex gap-6">
+                        <div class="w-8 h-8 rounded-2xl bg-emerald-100 flex items-center justify-center flex-shrink-0 text-xl">3</div>
+                        <div><strong class="text-emerald-800">Law of Honest Anonymity</strong><br>Everyone starts masked. Identity is your choice, never forced.</div>
+                    </div>
+                    <div class="flex gap-6">
+                        <div class="w-8 h-8 rounded-2xl bg-emerald-100 flex items-center justify-center flex-shrink-0 text-xl">4</div>
+                        <div><strong class="text-emerald-800">Law of Progress</strong><br>Stories are not meant to stay stuck. Gentle forward movement is encouraged.</div>
+                    </div>
+                    <div class="flex gap-6">
+                        <div class="w-8 h-8 rounded-2xl bg-emerald-100 flex items-center justify-center flex-shrink-0 text-xl">5</div>
+                        <div><strong class="text-emerald-800">Law of Purpose</strong><br>Those who heal are invited to quietly support others.</div>
+                    </div>
+                </div>
+
+                <div class="mt-12 text-xs text-emerald-500 border-t pt-6">
+                    <strong>Important Disclaimers</strong><br>
+                    The Majih is peer support only — not therapy, not medical, not legal advice.<br>
+                    Crisis? Call Befrienders Kenya: 0722 178 177 or Red Cross: 1199 immediately.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-emerald-900 text-emerald-100 py-16">
+        <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-12">
+            <div>
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-8 h-8 bg-emerald-600 rounded-2xl flex items-center justify-center text-white font-bold">M</div>
+                    <span class="text-2xl font-bold logo-font text-white">The Majih</span>
+                </div>
+                <p class="text-emerald-400 text-sm">Kenya-first structured peer support.<br>You are never alone here.</p>
+            </div>
+            
+            <div>
+                <div class="text-sm font-medium mb-4 text-emerald-400">IN CRISIS?</div>
+                <div class="space-y-2 text-sm text-emerald-200">
+                    <p>Befrienders Kenya — 0722 178 177</p>
+                    <p>Kenya Red Cross — 1199</p>
+                </div>
+            </div>
+            
+            <div class="text-xs text-emerald-500 self-end">
+                © 2026 The Majih • All pain is sacred here.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let posts = [
+            {
+                id: 1,
+                username: "MajihSoul_392",
+                space: "Relationship Struggles",
+                need: "Just listen",
+                text: "My wife left last month and I can't even tell anyone because of the shame. I feel completely empty.",
+                status: "Just Shared",
+                statusIndex: 0,
+                time: "2h ago",
+                comments: []
+            }
+        ];
+
+        const statusOptions = ["Just Shared", "Receiving Support", "Stabilizing", "Healing", "Healed & Mentoring"];
+
+        function renderFeed() {
+            const feed = document.getElementById('feed');
+            feed.innerHTML = '';
+            posts.forEach(post => {
+                const commentHtml = post.comments.map(c => `
+                    <div class="bg-emerald-50/80 p-4 rounded-2xl mb-2 text-sm text-emerald-800">
+                        <span class="font-bold text-emerald-700">${c.user}:</span> ${c.text}
+                    </div>
+                `).join('');
+
+                feed.innerHTML += `
+                    <div class="post-card bg-white border border-emerald-100 rounded-3xl p-8 mb-6">
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="flex items-center gap-3">
+                                <div class="w-9 h-9 bg-emerald-100 rounded-2xl flex items-center justify-center text-emerald-700 text-lg">👤</div>
+                                <div>
+                                    <p class="font-medium text-emerald-900">${post.username}</p>
+                                    <p class="text-xs text-emerald-500">${post.time} • ${post.space}</p>
+                                </div>
+                            </div>
+                            <div onclick="cycleStatus(${post.id})" class="cursor-pointer text-xs font-medium px-4 py-2 bg-emerald-50 text-emerald-700 rounded-2xl hover:bg-emerald-100 transition-all">
+                                ${post.status}
+                            </div>
+                        </div>
+                        <div class="mb-6 text-emerald-800 leading-relaxed">${post.text}</div>
+                        <div class="text-xs text-emerald-500 mb-6">I need: <span class="font-medium text-emerald-600">${post.need}</span></div>
+                        
+                        <div class="border-t border-emerald-50 pt-6">
+                            <div id="comments-${post.id}" class="space-y-2 mb-4">${commentHtml}</div>
+                            <div class="flex gap-3">
+                                <input id="input-${post.id}" type="text" placeholder="Write a supportive comment..." 
+                                       class="flex-1 text-sm p-4 bg-emerald-50 border-none rounded-2xl focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                                <button onclick="addComment(${post.id})" 
+                                        class="bg-emerald-600 text-white px-6 py-2 rounded-2xl text-sm font-semibold hover:bg-emerald-700 transition-colors">
+                                    Send
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function addComment(postId) {
+            const input = document.getElementById(`input-${postId}`);
+            const text = input.value.trim();
+            if (!text) return;
+
+            const post = posts.find(p => p.id === postId);
+            post.comments.push({
+                user: "MajihSoul_" + Math.floor(1000 + Math.random() * 9000),
+                text: text
+            });
+
+            if (post.statusIndex === 0) {
+                post.statusIndex = 1;
+                post.status = statusOptions[1];
+            }
+
+            input.value = '';
+            renderFeed();
+        }
+
+        function submitPost() {
+            const text = document.getElementById('storyText').value.trim();
+            if (!text) return alert("Please share a bit of your story.");
+
+            const space = document.getElementById('spaceSelect').value;
+            const activeBtn = document.querySelector('.need-btn.border-emerald-500');
+            const need = activeBtn ? activeBtn.getAttribute('data-need') : "Just listen";
+
+            posts.unshift({
+                id: Date.now(),
+                username: "MajihSoul_" + Math.floor(1000 + Math.random() * 9000),
+                space: space,
+                need: need,
+                text: text,
+                status: "Just Shared",
+                statusIndex: 0,
+                time: "just now",
+                comments: []
+            });
+
+            renderFeed();
+            document.getElementById('storyText').value = '';
+            document.querySelectorAll('.need-btn').forEach(b => b.classList.remove('border-emerald-500', 'bg-emerald-50'));
+            closeNewPostModal();
+        }
+
+        function cycleStatus(id) {
+            const post = posts.find(p => p.id === id);
+            post.statusIndex = (post.statusIndex + 1) % statusOptions.length;
+            post.status = statusOptions[post.statusIndex];
+            renderFeed();
+        }
+
+        function selectNeed(btn) {
+            document.querySelectorAll('.need-btn').forEach(b => b.classList.remove('border-emerald-500', 'bg-emerald-50'));
+            btn.classList.add('border-emerald-500', 'bg-emerald-50');
+        }
+
+        function showSection(id) {
+            const target = document.getElementById(id);
+            if (target) {
+                const navHeight = 80; 
+                window.scrollTo({
+                    top: target.offsetTop - navHeight,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        function enterSpace(spaceName) {
+            const feedContainer = document.getElementById('feed-container');
+            if(feedContainer) {
+                window.scrollTo({
+                    top: feedContainer.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        function openNewPostModal() { document.getElementById('newPostModal').classList.remove('hidden'); }
+        function closeNewPostModal() { document.getElementById('newPostModal').classList.add('hidden'); }
+        function showConstitution() { document.getElementById('constitutionModal').classList.remove('hidden'); }
+        function closeConstitutionModal() { document.getElementById('constitutionModal').classList.add('hidden'); }
+        function toggleAnonymousMode() { alert("Identity protection is active."); }
+
+        window.onload = renderFeed;
+    </script>
+</body>
+</html>
