@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Access • The Majih</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body { font-family: 'DM Sans', sans-serif; }
+        .logo-font { font-family: 'Cormorant Garamond', serif; }
+        .bg-pattern {
+            background-color: #ecfdf5;
+            background-image: radial-gradient(circle at 20% 30%, rgba(16,185,129,0.12) 0%, transparent 50%),
+                              radial-gradient(circle at 80% 70%, rgba(5,150,105,0.10) 0%, transparent 50%);
+        }
+        .card-shadow { box-shadow: 0 32px 64px -12px rgba(5,150,105,0.15), 0 0 0 1px rgba(5,150,105,0.06); }
+        .input-field {
+            width: 100%; padding: 14px 18px;
+            background: #f0fdf4; border: 1.5px solid #d1fae5;
+            border-radius: 16px; outline: none; transition: all 0.2s;
+            font-family: 'DM Sans', sans-serif; font-size: 15px; color: #065f46;
+        }
+        .input-field:focus { border-color: #059669; background: #fff; box-shadow: 0 0 0 4px rgba(5,150,105,0.08); }
+        .input-field::placeholder { color: #6ee7b7; }
+        .btn-primary {
+            width: 100%; padding: 16px; background: #059669;
+            color: white; border: none; border-radius: 18px;
+            font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 600;
+            cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+        .btn-primary:hover { background: #047857; transform: translateY(-1px); box-shadow: 0 8px 20px rgba(5,150,105,0.3); }
+        .btn-primary:active { transform: translateY(0); }
+        .btn-primary:disabled { background: #a7f3d0; cursor: not-allowed; transform: none; box-shadow: none; }
+        .upload-zone {
+            border: 2px dashed #a7f3d0; border-radius: 18px;
+            padding: 28px; text-align: center; cursor: pointer;
+            transition: all 0.2s; background: #f0fdf4;
+        }
+        .upload-zone:hover { border-color: #059669; background: #ecfdf5; }
+        .upload-zone.has-file { border-color: #059669; background: #ecfdf5; border-style: solid; }
+        .tab-btn { padding: 10px 20px; border-radius: 12px; font-weight: 500; font-size: 15px; cursor: pointer; transition: all 0.2s; border: none; background: transparent; color: #6ee7b7; }
+        .tab-btn.active { background: #059669; color: white; }
+        .toast {
+            position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px);
+            background: #1a1a1a; color: white; padding: 12px 22px; border-radius: 14px;
+            font-size: 14px; font-weight: 500; transition: transform 0.3s ease; z-index: 9999;
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); }
+        .toast.error { background: #dc2626; }
+        .toast.success { background: #059669; }
+        .spinner { animation: spin 0.8s linear infinite; display: inline-block; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .fade-in { animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="bg-pattern min-h-screen flex items-center justify-center p-4">
+
+    <div class="max-w-md w-full fade-in">
+
+        <!-- Logo -->
+        <div class="text-center mb-8">
+            <div class="w-14 h-14 bg-emerald-600 rounded-2xl flex items-center justify-center text-white text-2xl font-bold logo-font mx-auto mb-4 shadow-lg">M</div>
+            <h1 class="text-3xl font-bold text-emerald-800 logo-font">The Majih</h1>
+            <p class="text-emerald-500 text-sm mt-1 tracking-wide">…Hear. Help. Heal…</p>
+        </div>
+
+        <!-- Card -->
+        <div class="bg-white rounded-3xl card-shadow overflow-hidden">
+
+            <!-- Tabs -->
+            <div class="flex gap-2 p-4 bg-emerald-600">
+                <button class="tab-btn active flex-1" id="tabLogin" onclick="switchTab('login')">Sign In</button>
+                <button class="tab-btn flex-1" id="tabSignup" onclick="switchTab('signup')">Join The Majih</button>
+            </div>
+
+            <!-- LOGIN FORM -->
+            <div id="loginForm" class="p-8 space-y-5">
+                <div>
+                    <label class="block text-xs font-bold text-emerald-700 uppercase tracking-wider mb-2">Email Address</label>
+                    <input type="email" id="loginEmail" class="input-field" placeholder="your@email.com">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-emerald-700 uppercase tracking-wider mb-2">Password</label>
+                    <input type="password" id="loginPassword" class="input-field" placeholder="••••••••">
+                </div>
+                <button class="btn-primary" id="loginBtn" onclick="handleLogin()">
+                    <span>Enter The Space</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                <p class="text-center text-xs text-emerald-500">
+                    <a href="#" onclick="showForgotPassword()" class="underline">Forgot your password?</a>
+                </p>
+            </div>
+
+            <!-- SIGNUP FORM -->
+            <div id="signupForm" class="p-8 space-y-5 hidden">
+                <div>
+                    <label class="block text-xs font-bold text-emerald-700 uppercase tracking-wider mb-2">Email Address</label>
+                    <input type="email" id="signupEmail" class="input-field" placeholder="your@email.com">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-emerald-700 uppercase tracking-wider mb-2">Password</label>
+                    <input type="password" id="signupPassword" class="input-field" placeholder="At least 6 characters">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-emerald-700 uppercase tracking-wider mb-2">Phone Number</label>
+                    <input type="tel" id="signupPhone" class="input-field" placeholder="e.g. 07XX XXX XXX">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-emerald-700 uppercase tracking-wider mb-2">National ID (for age verification)</label>
+                    <div class="upload-zone" id="uploadZone" onclick="document.getElementById('idUpload').click()">
+                        <input type="file" id="idUpload" accept="image/*" class="hidden" onchange="handleFileSelect(this)">
+                        <i class="fas fa-id-card text-2xl text-emerald-300 mb-2 block"></i>
+                        <span id="fileName" class="text-sm text-emerald-500">Click to upload front of National ID</span>
+                        <p class="text-[10px] text-emerald-400 mt-2">We extract name & age only. Image is not stored.</p>
+                    </div>
+                </div>
+                <button class="btn-primary" id="signupBtn" onclick="handleSignup()">
+                    <span>Create My Account</span>
+                    <i class="fas fa-shield-alt"></i>
+                </button>
+            </div>
+
+        </div>
+
+        <p class="text-center text-xs text-emerald-400 mt-6">
+            Your identity remains hidden. Your safety remains absolute.
+        </p>
+        <div class="text-center mt-4 text-xs text-emerald-400">
+            In crisis? Call <a href="tel:0722178177" class="underline font-bold">0722 178 177</a> (Befrienders Kenya)
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // ============================================================
+        // SUPABASE CONFIG — Replace these with your real project values
+        // ============================================================
+        const SUPABASE_URL = 'https://wutdlhgcezhodyqvxuvo.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind1dGRsaGdjZXpob2R5cXZ4dXZvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE5NjYxNDEsImV4cCI6MjA4NzU0MjE0MX0.DOWdW5o32DURZqoi9-iH7MsEjDRHh-lxmq4yg5YWa9I';
+        // ============================================================
+
+        const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // Check if already logged in → redirect
+        (async () => {
+            const { data: { session } } = await _supabase.auth.getSession();
+            if (session) window.location.href = 'home.html';
+        })();
+
+        function switchTab(tab) {
+            const isLogin = tab === 'login';
+            document.getElementById('loginForm').classList.toggle('hidden', !isLogin);
+            document.getElementById('signupForm').classList.toggle('hidden', isLogin);
+            document.getElementById('tabLogin').classList.toggle('active', isLogin);
+            document.getElementById('tabSignup').classList.toggle('active', !isLogin);
+        }
+
+        function handleFileSelect(input) {
+            const file = input.files[0];
+            if (file) {
+                document.getElementById('fileName').textContent = '✓ ' + file.name;
+                document.getElementById('uploadZone').classList.add('has-file');
+            }
+        }
+
+        function showToast(msg, type = '') {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.className = `toast ${type} show`;
+            setTimeout(() => t.classList.remove('show'), 3500);
+        }
+
+        function setLoading(btnId, loading, label = '') {
+            const btn = document.getElementById(btnId);
+            btn.disabled = loading;
+            btn.innerHTML = loading
+                ? `<i class="fas fa-circle-notch spinner"></i> Please wait...`
+                : label;
+        }
+
+        async function handleLogin() {
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            if (!email || !password) return showToast('Please fill in all fields.', 'error');
+
+            setLoading('loginBtn', true);
+            const { error } = await _supabase.auth.signInWithPassword({ email, password });
+            setLoading('loginBtn', false, '<span>Enter The Space</span><i class="fas fa-arrow-right"></i>');
+
+            if (error) return showToast(error.message, 'error');
+            showToast('Welcome back 💚', 'success');
+            setTimeout(() => window.location.href = 'home.html', 800);
+        }
+
+        async function handleSignup() {
+            const email = document.getElementById('signupEmail').value.trim();
+            const password = document.getElementById('signupPassword').value;
+            const phone = document.getElementById('signupPhone').value.trim();
+
+            if (!email || !password || !phone) return showToast('Please fill in all fields.', 'error');
+            if (password.length < 6) return showToast('Password must be at least 6 characters.', 'error');
+
+            setLoading('signupBtn', true);
+
+            const { data, error } = await _supabase.auth.signUp({
+                email, password,
+                options: { data: { phone, display_name: 'MajihSoul_' + Math.floor(1000 + Math.random() * 9000) } }
+            });
+
+            setLoading('signupBtn', false, '<span>Create My Account</span><i class="fas fa-shield-alt"></i>');
+
+            if (error) return showToast(error.message, 'error');
+            showToast('Account created! Check your email to confirm.', 'success');
+            setTimeout(() => switchTab('login'), 2000);
+        }
+
+        async function showForgotPassword() {
+            const email = prompt('Enter your email address to receive a reset link:');
+            if (!email) return;
+            const { error } = await _supabase.auth.resetPasswordForEmail(email);
+            if (error) showToast(error.message, 'error');
+            else showToast('Password reset link sent to your email!', 'success');
+        }
+
+        // Allow Enter key to submit
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const loginVisible = !document.getElementById('loginForm').classList.contains('hidden');
+                if (loginVisible) handleLogin();
+                else handleSignup();
+            }
+        });
+    </script>
+</body>
+</html>
